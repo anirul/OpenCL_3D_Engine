@@ -33,8 +33,11 @@
 
 #include "glut_win.hpp"
 
+typedef std::function<void (std::vector<unsigned char>&)> callback_next_t;
+
 class win_3d_engine : public i_win {
 private:
+	callback_next_t callback_next_;
     std::pair<unsigned int, unsigned int> range_;
     bool gpu_;
     unsigned int device_;
@@ -42,6 +45,7 @@ private:
     std::vector<unsigned char> current_image_;
 public:
     win_3d_engine(
+		callback_next_t next,
         const std::pair<unsigned int, unsigned int>& size,
         bool gpu = true,
         unsigned int device = 0);

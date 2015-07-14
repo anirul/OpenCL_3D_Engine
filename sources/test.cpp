@@ -35,5 +35,18 @@
 
 int main(int ac, char** av)
 {
+	const std::pair<unsigned int, unsigned int> range = {800, 600};
+	try {
+		win_3d_engine w3e([range](std::vector<unsigned char>& img) {
+				static unsigned char val = 0;
+				img.assign(range.first * range.second * 4, val);
+				val++;
+			},
+			range);
+		glut_win::instance("OpenCL 3D Engine -- TEST --", range, &w3e)->run();
+	} catch (std::exception& ex) {
+		std::cerr << "exception (std) : " << ex.what() << std::endl;
+		return -1;
+	}
     return 0;
 }

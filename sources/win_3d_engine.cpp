@@ -48,9 +48,11 @@
 #include "win_3d_engine.hpp"
 
 win_3d_engine::win_3d_engine(
+	callback_next_t callback_next,
     const std::pair<unsigned int, unsigned int>& size,
     bool gpu,
     unsigned int device) :
+callback_next_(callback_next),
 range_(size),
 gpu_(gpu),
 device_(device),
@@ -94,6 +96,7 @@ void win_3d_engine::display()
 
 void win_3d_engine::idle()
 {
+	callback_next_(current_image_);
     glFinish();
     glBindTexture(GL_TEXTURE_2D, texture_id_);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
